@@ -808,7 +808,7 @@ function renderStats(){
   box.insertAdjacentHTML("beforeend",
    `<div class="stat money"><span class="lb">통장잔고</span><span></span><span class="vl mono ${m<0?"minus":""}">${m}만원</span></div>`);
   // 표정
-  const f=$("face");f.className="face";
+  const f=$("face");f.setAttribute("class","face");
   const s=S.stats;
   if(s.liver<=25)f.classList.add("drunk");
   else if(s.mental<=20||s.health<=20)f.classList.add("dead");
