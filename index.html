@@ -647,6 +647,7 @@ function toast(msg){
 
 /* ---------- 입력 ---------- */
 $("btn-work").onclick=e=>work();
+$("btn-work").addEventListener("keydown",e=>{if(e.code==="Space"||e.code==="Enter")e.preventDefault();});
 $("btn-enh").onclick=tryEnhance;
 document.querySelectorAll(".tabs button").forEach(b=>{
   b.onclick=()=>{
