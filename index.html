@@ -380,10 +380,10 @@ function currentBonus(){
   }
   return b;
 }
-function probs(){
+function probs(){ // 표시용: 아이템 보너스 미반영(기본 확률 고정)
   const n=R.lv;
   const d=DEST[n];
-  const s=Math.min(SUCC[n]+currentBonus(),100-d);
+  const s=Math.min(SUCC[n],100-d);
   return{s,d,f:100-s-d};
 }
 function tryEnhance(){
@@ -417,8 +417,8 @@ function tryEnhance(){
   raf(()=>raf(()=>{fill.style.width="100%";}));
   setTimeout(()=>{
     ov.classList.remove("on");
-    resolveEnhance(n,bonus,shieldUsed);
     enhBusy=false;
+    resolveEnhance(n,bonus,shieldUsed);
     saveRun();saveMeta();
   },1500);
 }
