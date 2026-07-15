@@ -208,11 +208,11 @@ button:disabled:hover{background:var(--panel)}
       <div class="enh-body">
         <div class="enh-row"><span>다음 단계</span><b id="enh-next"></b></div>
         <div class="enh-row"><span>성공 확률</span><b id="enh-succ" class="ok"></b></div>
-        <div class="enh-row"><span>실패(하락) / <span style="color:var(--danger)">파괴</span></span><b id="enh-risk"></b></div>
+        <div class="enh-row"><span>실패 / <span style="color:var(--danger)">파괴</span></span><b id="enh-risk"></b></div>
         <div class="prob-bar" id="prob-bar"></div>
         <div class="items" id="item-slots"></div>
         <button id="btn-enh">⚒️ 강화하기 <span id="enh-cost" class="mono"></span></button>
-        <div class="enh-note" id="enh-note">파괴 시 모든 것을 잃는다. 업적과 기록만 남는다.</div>
+        <div class="enh-note" id="enh-note">실패 시 0강 복귀(자산 유지) · 파괴 시 전부 소멸 · 🛡️는 +11강부터 사용 불가</div>
       </div>
     </div>
   </div>
@@ -260,8 +260,8 @@ const SAVE_KEY="yangup_save", META_KEY="yangup_meta";
 
 /* ---------- 강화 테이블 (n → n+1) ---------- */
 const SUCC=[100,100,100,85,75,65,50,40,30,25,20,15,10,8,6];
-const DEST=[0,0,0,0,0,0,0,0,0,0,0,0,15,20,25];
-const DROP_FROM=6; // +7 시도(n=6)부터 실패 시 하락
+const DEST=[0,0,0,0,0,2,4,6,8,10,12,15,18,22,25];
+const SHIELD_MAX=10; // 파괴방지권은 +10→+11 시도까지만 사용 가능
 const MAX_LV=15;
 const TIERS=[[0,"인턴급"],[3,"대리급"],[6,"과장급"],[9,"임원급"],[12,"재벌급"],[15,"사무실의 신"]];
 const enhCost=n=>Math.round(1000*Math.pow(2.0,n)/100)*100;
@@ -272,7 +272,7 @@ const ITEMS=[
  {id:"chicken",ico:"🍗",nm:"야근치킨",de:"성공률 +7%p",bonus:7,price:30000},
  {id:"iv",ico:"💉",nm:"링거",de:"성공률 +12%p",bonus:12,price:200000},
  {id:"praise",ico:"👏",nm:"부장의 칭찬",de:"성공률 +20%p",bonus:20,price:1500000},
- {id:"leave",ico:"📄",nm:"연차서류",de:"실패 시 하락 방지 1회",bonus:0,price:100000}
+ {id:"shield",ico:"🛡️",nm:"파괴방지권",de:"파괴 1회 방어 (+11강부터 사용 불가)",bonus:0,price:3000000}
 ];
 
 /* ---------- 업그레이드 ---------- */
@@ -302,7 +302,7 @@ const ACHS=[
  {id:"clk10k",ico:"🩹",nm:"손목 보호대 필요",de:"누적 10,000클릭",ck:m=>m.clicks>=10000},
  {id:"rich1",ico:"💰",nm:"영끌 가능",de:"자산 1억 보유",ck:m=>m.peakMoney>=100000000},
  {id:"iv10",ico:"💉",nm:"수액 단골",de:"링거 누적 10개 사용",ck:m=>m.ivUsed>=10},
- {id:"drop3",ico:"📉",nm:"마음의 소리: 접어라",de:"하락 3연속",ck:m=>m.dropStreak>=3},
+ {id:"drop3",ico:"📉",nm:"마음의 소리: 접어라",de:"강화 실패 0강 복귀 3연속",ck:m=>m.dropStreak>=3},
  {id:"praise1",ico:"👏",nm:"칭찬은 양대리를 춤추게",de:"부장의 칭찬 사용",ck:m=>m.praiseUsed>=1},
  {id:"allup",ico:"🛠️",nm:"풀세팅",de:"업그레이드 전부 구매",ck:m=>m.allUps},
  {id:"try50",ico:"🎰",nm:"강화 중독",de:"누적 강화 시도 50회",ck:m=>m.tries>=50}
@@ -310,12 +310,13 @@ const ACHS=[
 
 /* ---------- 상태 ---------- */
 let R=null,M=null,enhBusy=false;
-function newRun(){return{money:0,lv:0,ups:{},items:{coffee:0,chicken:0,iv:0,praise:0,leave:0}};}
+function newRun(){return{money:0,lv:0,ups:{},items:{coffee:0,chicken:0,iv:0,praise:0,shield:0}};}
 function newMeta(){return{gen:1,ach:[],clicks:0,tries:0,enhOk:0,destroys:0,bestLv:0,peakMoney:0,ivUsed:0,praiseUsed:0,dropStreak:0,allUps:false};}
 const saveRun=()=>localStorage.setItem(SAVE_KEY,JSON.stringify(R));
 const saveMeta=()=>localStorage.setItem(META_KEY,JSON.stringify(M));
 function load(){
   try{R=JSON.parse(localStorage.getItem(SAVE_KEY))||newRun();}catch(e){R=newRun();}
+  R.items=Object.assign(newRun().items,R.items||{}); // 구버전 세이브에 새 아이템 키 병합
   try{M=Object.assign(newMeta(),JSON.parse(localStorage.getItem(META_KEY))||{});}catch(e){M=newMeta();}
 }
 
@@ -399,8 +400,8 @@ function tryEnhance(){
     const chk=document.getElementById("chk-"+it.id);
     if(chk&&chk.checked&&R.items[it.id]>0){used[it.id]=true;}
   }
-  const bonus=Object.keys(used).filter(k=>k!=="leave").reduce((a,k)=>a+ITEMS.find(i=>i.id===k).bonus,0);
-  const leaveUsed=!!used.leave;
+  const bonus=Object.keys(used).filter(k=>k!=="shield").reduce((a,k)=>a+ITEMS.find(i=>i.id===k).bonus,0);
+  const shieldUsed=!!used.shield&&n<=SHIELD_MAX;
   for(const k in used){
     R.items[k]--;
     if(k==="iv")M.ivUsed++;
@@ -416,12 +417,12 @@ function tryEnhance(){
   raf(()=>raf(()=>{fill.style.width="100%";}));
   setTimeout(()=>{
     ov.classList.remove("on");
-    resolveEnhance(n,bonus,leaveUsed);
+    resolveEnhance(n,bonus,shieldUsed);
     enhBusy=false;
     saveRun();saveMeta();
   },1500);
 }
-function resolveEnhance(n,bonus,leaveUsed){
+function resolveEnhance(n,bonus,shieldUsed){
   const d=DEST[n];
   const s=Math.min(SUCC[n]+bonus,100-d);
   const r=Math.random()*100;
@@ -435,17 +436,23 @@ function resolveEnhance(n,bonus,leaveUsed){
     toast(`✨ 강화 성공! +${R.lv} ${tierName(R.lv)} 양대리`);
     if(R.lv===MAX_LV)toast("🌈 +15 달성. 그는 이제 사무실의 신이다.");
   }else if(r<s+d){ // 파괴
-    M.destroys++;M.dropStreak=0;
-    destroySequence(n);
-  }else{ // 실패
-    if(n>=DROP_FROM&&!leaveUsed){
-      R.lv--;M.dropStreak++;
+    if(shieldUsed){
+      M.dropStreak=0;
       stage.classList.remove("enh-drop");void stage.offsetWidth;
       stage.classList.add("enh-drop");
-      toast(`📉 강화 실패... +${R.lv}로 하락`);
+      toast("🛡️ 파괴방지권이 산화를 막았다! 단계 유지.");
     }else{
-      M.dropStreak=0;
-      toast(leaveUsed&&n>=DROP_FROM?"📄 연차서류의 힘으로 하락을 막았다":"강화 실패. 단계는 유지됐다.");
+      M.destroys++;M.dropStreak=0;
+      destroySequence(n);
+    }
+  }else{ // 실패: 0강 복귀 (돈/업그레이드/아이템 유지)
+    if(n>0){
+      R.lv=0;M.dropStreak++;
+      stage.classList.remove("enh-drop");void stage.offsetWidth;
+      stage.classList.add("enh-drop");
+      toast(`📉 강화 실패... +${n} 양대리가 초심(+0)으로 돌아갔다. 자산은 무사하다.`);
+    }else{
+      toast("강화 실패. 이미 바닥이라 잃을 단계도 없다.");
     }
   }
   checkAch();
@@ -498,7 +505,7 @@ const EVENTS=[
  {tag:"야근",t:"금요일 밤, 긴급 야근 요청. 수당은 두둑하다.",c:[["한다 (+클릭 300회분)",cp=>{earn(cp*300);return"주말과 맞바꾼 수당. 통장은 웃고 몸은 운다.";}],["거절한다",()=>"저녁이 있는 삶을 지켰다. 지갑은 조금 가볍지만."]]},
  {tag:"지출",t:"지하철에서 졸다가 지갑을 잃어버렸다!",c:[["유실물센터로 달려간다",cp=>{if(Math.random()<0.5){return"찾았다! 대한민국 시민의식 만세.";}R.money=Math.max(0,R.money-cp*100);return"현금만 사라져 있었다. 시민의식에도 예외는 있다.";}]]},
  {tag:"외주",t:"지인: \"간단한 홈페이지 하나만... 500 줄게.\"",c:[["받는다 (+클릭 600회분)",cp=>{earn(cp*600);return"'간단한'은 거짓말이었지만 돈은 진짜였다.";}],["거절한다",()=>"주말을 지켰다. '간단한 홈페이지'란 존재하지 않는다."]]},
- {tag:"복지",t:"사내 벼룩시장이 열렸다. 경리팀이 연차서류 양식을 판다(?)",c:[["산다 (-클릭 40회분, 연차서류 +1)",cp=>{R.money=Math.max(0,R.money-cp*40);R.items.leave++;return"연차서류 획득. 이게 왜 벼룩시장에... 묻지 말자.";}],["구경만",()=>"눈으로만 쇼핑했다. 그것도 재미다."]]},
+ {tag:"복지",t:"사내 벼룩시장이 열렸다. 총무팀이 '파괴방지권(정품)'을 반값에 판다(?)",c:[["산다 (-150만원, 방지권 +1)",cp=>{if(R.money<1500000)return"돈이 모자라다. 반값도 비싸다.";R.money-=1500000;R.items.shield++;return"파괴방지권 획득. 출처는 묻지 않기로 했다.";}],["구경만",()=>"눈으로만 쇼핑했다. 그것도 재미다."]]},
  {tag:"동물",t:"주차장 길고양이 '널포인터'가 당신을 빤히 본다.",c:[["츄르를 사준다 (-클릭 15회분)",cp=>{R.money=Math.max(0,R.money-cp*15);R.items.coffee++;return"고양이를 챙기는 당신을 본 동료가 커피를 사줬다. 세상은 돌고 돈다.";}],["바쁘다, 지나친다",()=>"널포인터는 옆 회사 사람에게 갔다. 참조가 옮겨졌다."]]},
  {tag:"심부름",t:"부장: \"양대리, 임원회의 자료 좀 뽑아와. 급해!\"",c:[["광속으로 처리한다",cp=>{if(Math.random()<0.5){R.items.praise++;return"완벽한 심부름. '부장의 칭찬'을 획득했다!";}earn(cp*50);return"수고했다며 커피값을 쥐여줬다. 나쁘지 않다.";}],["프린터 고장을 핑계로 뭉갠다",()=>"부장이 직접 뽑았다. 어색한 침묵이 이틀 갔다."]]}
 ];
@@ -571,7 +578,7 @@ function renderEnh(){
   $("enh-next").textContent=`+${n} → +${n+1} (${tierName(n+1)})`;
   $("enh-succ").textContent=p.s+"%";
   $("enh-succ").className=p.s>=60?"ok":p.s>=25?"warn":"bad";
-  $("enh-risk").innerHTML=`${n>=DROP_FROM?"하락 ":"유지 "}${p.f}% / <span style="color:var(--danger)">파괴 ${p.d}%</span>`;
+  $("enh-risk").innerHTML=`실패(0강 복귀) ${p.f}% / <span style="color:var(--danger)">파괴 ${p.d}%</span>`;
   $("prob-bar").innerHTML=
    `<span class="p-s" style="width:${p.s}%"></span><span class="p-f" style="width:${p.f}%"></span><span class="p-d" style="width:${p.d}%"></span>`;
   $("btn-enh").disabled=enhBusy||R.money<enhCost(n);
@@ -584,10 +591,12 @@ function renderItems(){
   box.innerHTML="";
   for(const it of ITEMS){
     const cnt=R.items[it.id]||0;
+    const locked=it.id==="shield"&&R.lv>SHIELD_MAX;
+    const usable=cnt&&!locked;
     const l=document.createElement("label");
-    l.className="item-check"+(cnt?"":" none");
-    l.innerHTML=`<input type="checkbox" id="chk-${it.id}" ${cnt?"":"disabled"} ${prev[it.id]&&cnt?"checked":""}>
-      <span>${it.ico} ${it.nm}</span><span style="color:var(--dim);font-size:11px">${it.de}</span><span class="cnt mono">×${cnt}</span>`;
+    l.className="item-check"+(usable?"":" none");
+    l.innerHTML=`<input type="checkbox" id="chk-${it.id}" ${usable?"":"disabled"} ${prev[it.id]&&usable?"checked":""}>
+      <span>${it.ico} ${it.nm}</span><span style="color:var(--dim);font-size:11px">${locked?"고단계 사용 불가":it.de}</span><span class="cnt mono">×${cnt}</span>`;
     box.appendChild(l);
   }
   box.querySelectorAll("input").forEach(i=>i.onchange=renderEnh);
