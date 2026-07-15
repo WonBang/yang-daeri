@@ -200,7 +200,7 @@ button:disabled:hover{background:var(--panel)}
         <div class="money mono" id="ui-money">0원</div>
         <div class="money-sub">클릭당 <b id="ui-cp" class="mono"></b> · 자동 <b id="ui-auto" class="mono"></b>/초</div>
         <button id="btn-work">💼 일하기</button>
-        <div class="work-hint">스페이스바로도 일할 수 있다. 노동에는 끝이 없다.</div>
+        <div class="work-hint">노동에는 끝이 없다.</div>
       </div>
     </div>
     <div class="panel">
@@ -647,9 +647,6 @@ function toast(msg){
 
 /* ---------- 입력 ---------- */
 $("btn-work").onclick=e=>work();
-document.addEventListener("keydown",e=>{
-  if(e.code==="Space"&&!e.target.closest("input,button")){e.preventDefault();work();}
-});
 $("btn-enh").onclick=tryEnhance;
 document.querySelectorAll(".tabs button").forEach(b=>{
   b.onclick=()=>{
