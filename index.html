@@ -354,6 +354,7 @@ function work(x,y){
   clicksSinceEv++;
   maybeEvent();
   renderMoney();
+  if(M.clicks%5===0){renderShop();renderUps();}
   // 클릭 팝 (과도 생성 방지: 60ms 스로틀)
   const now=Date.now();
   if(now-lastPopAt>60){
@@ -546,6 +547,7 @@ function renderMoney(){
   $("ui-money").textContent=fmt(R.money);
   $("ui-cp").textContent=fmt(clickPower());
   $("ui-auto").textContent=fmt(autoPower());
+  $("btn-enh").disabled=enhBusy||R.lv>=MAX_LV||R.money<enhCost(R.lv);
 }
 function renderStage(){
   $("ui-lv").textContent="+"+R.lv;
