@@ -70,30 +70,24 @@ button:disabled:hover{background:var(--panel)}
 .stage-bg{position:absolute;inset:0;opacity:0;transition:opacity 1s;background:conic-gradient(from 0deg,#ff9aa2,#ffd94a,#9af0b2,#9ad2ff,#d5a9ff,#ff9aa2);mix-blend-mode:overlay;animation:spinHue 6s linear infinite;pointer-events:none}
 
 /* 강화 결과 연출 */
-.stage.enh-success{animation:flashG .6s ease}
+.stage.enh-success{animation:flashG .5s ease}
 @keyframes flashG{0%{box-shadow:0 0 0 4px var(--term),0 12px 40px rgba(0,0,0,.5)}100%{box-shadow:0 12px 40px rgba(0,0,0,.5)}}
-.stage.enh-drop{animation:flashR .6s ease}
+.stage.enh-drop{animation:flashR .5s ease}
 @keyframes flashR{0%{box-shadow:0 0 0 4px var(--danger),0 12px 40px rgba(0,0,0,.5)}100%{box-shadow:0 12px 40px rgba(0,0,0,.5)}}
 .shake{animation:bigshake .7s ease}
 @keyframes bigshake{15%{transform:translate(-9px,3px) rotate(-1deg)}30%{transform:translate(8px,-3px)}45%{transform:translate(-7px,2px) rotate(1deg)}60%{transform:translate(6px,-2px)}75%{transform:translate(-4px,1px)}}
-.enh-gauge-wrap{position:absolute;inset:0;background:rgba(10,14,28,.82);display:none;align-items:center;justify-content:center;flex-direction:column;gap:14px;z-index:5}
-.enh-gauge-wrap.on{display:flex}
-.enh-gauge-wrap .txt{color:#ffd94a;font-weight:800;font-size:15px;letter-spacing:.2em}
-.enh-gauge{width:60%;height:14px;background:#2a3350;border-radius:7px;overflow:hidden}
-.enh-gauge .gfill{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),#ff7b54);transition:width 1.4s cubic-bezier(.2,.6,.3,1)}
 
 /* ---------- 메인 그리드 ---------- */
 .main{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
 @media (max-width:700px){.main{grid-template-columns:1fr}}
-.work-body{padding:16px;text-align:center}
+.offer-body{padding:16px;text-align:center}
 .money{font-size:26px;font-weight:900}
-.money-sub{font-size:11px;color:var(--dim);margin:2px 0 12px}
-#btn-work{width:100%;padding:26px 10px;font-size:22px;font-weight:900;background:var(--ink);color:#fff;border-radius:10px;user-select:none;touch-action:manipulation}
-#btn-work:hover{background:#3a4460}
-#btn-work:active{transform:scale(.96)}
-.work-hint{font-size:11px;color:var(--dim);margin-top:8px}
-.click-pop{position:absolute;font-weight:800;color:var(--term);font-size:14px;pointer-events:none;animation:cpop .7s ease forwards}
-@keyframes cpop{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-34px)}}
+.money-sub{font-size:11px;color:var(--dim);margin:2px 0 10px}
+.offer-price{font-size:22px;font-weight:900;color:#1e7a45;margin-bottom:2px}
+.offer-price.zero{color:var(--dim)}
+#btn-sell{width:100%;padding:20px 10px;font-size:19px;font-weight:900;background:#1e7a45;color:#fff;border-color:#1e7a45;border-radius:10px;margin-top:10px}
+#btn-sell:hover{background:#166237}
+.offer-hint{font-size:11px;color:var(--dim);margin-top:8px;line-height:1.6}
 
 .enh-body{padding:14px}
 .enh-row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px}
@@ -107,7 +101,7 @@ button:disabled:hover{background:var(--panel)}
 .item-check.none{opacity:.45}
 #btn-enh{width:100%;padding:14px;font-size:17px;font-weight:900;background:var(--stamp);color:#fff;border-color:var(--stamp);border-radius:8px}
 #btn-enh:hover{background:#a72d24}
-.enh-note{font-size:11px;color:var(--dim);text-align:center;margin-top:6px}
+.enh-note{font-size:11px;color:var(--dim);text-align:center;margin-top:6px;line-height:1.6}
 
 /* ---------- 탭 ---------- */
 .tabs{display:flex;gap:6px;margin-bottom:10px}
@@ -125,7 +119,7 @@ button:disabled:hover{background:var(--panel)}
 .ach .badge{font-size:18px}
 .ach b{font-size:13px}
 
-/* ---------- 이벤트/파괴 모달 ---------- */
+/* ---------- 모달/토스트 ---------- */
 .modal-back{position:fixed;inset:0;background:rgba(8,10,20,.7);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}
 .modal-back.on{display:flex}
 .modal{max-width:420px;width:100%;background:var(--panel);border-radius:12px;padding:22px;animation:fadein .25s ease}
@@ -135,6 +129,8 @@ button:disabled:hover{background:var(--panel)}
 .modal .m-choices{display:grid;gap:8px}
 .modal.destroy-modal{text-align:center;border:3px solid var(--danger)}
 .destroy-title{font-size:26px;font-weight:900;color:var(--danger);margin:6px 0}
+.modal.sell-modal{text-align:center;border:3px solid #1e7a45}
+.sell-title{font-size:24px;font-weight:900;color:#1e7a45;margin:6px 0}
 .toast-zone{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);display:grid;gap:6px;z-index:60;pointer-events:none}
 .toast{background:#22293a;color:#ffd94a;padding:10px 18px;border-radius:8px;font-size:13px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.4);animation:toastin 3s ease forwards}
 @keyframes toastin{0%{opacity:0;transform:translateY(10px)}8%{opacity:1;transform:none}80%{opacity:1}100%{opacity:0}}
@@ -151,7 +147,7 @@ button:disabled:hover{background:var(--panel)}
   <div class="stage" id="stage">
     <div class="stage-bg"></div>
     <div class="lvl"><span class="plus" id="ui-lv">+0</span></div>
-    <div class="tier" id="ui-tier">인턴급</div>
+    <div class="tier" id="ui-tier">인턴</div>
     <div class="best mono" id="ui-best"></div>
     <div class="char-wrap" id="char-tier">
       <svg viewBox="0 0 190 210" aria-hidden="true">
@@ -159,7 +155,6 @@ button:disabled:hover{background:var(--panel)}
         <g id="char-inner">
           <ellipse class="fx-aura" cx="95" cy="105" rx="72" ry="95" fill="none" stroke="#7fd4ff" stroke-width="5" opacity="0"/>
           <circle class="fx-halo" cx="95" cy="12" r="26" fill="none" stroke="var(--gold)" stroke-width="6"/>
-          <!-- 몸통 -->
           <rect x="55" y="112" width="80" height="72" rx="18" fill="#3a4460"/>
           <rect x="88" y="118" width="14" height="40" fill="#c8372d"/>
           <rect class="fx-tie-glow" x="86" y="116" width="18" height="44" rx="4" fill="none" stroke="#ffd94a" stroke-width="3"/>
@@ -168,10 +163,8 @@ button:disabled:hover{background:var(--panel)}
           <circle cx="61" cy="176" r="7" fill="#f2d3b3"/><circle cx="129" cy="176" r="7" fill="#f2d3b3"/>
           <rect x="70" y="182" width="20" height="22" rx="5" fill="#23283a"/>
           <rect x="100" y="182" width="20" height="22" rx="5" fill="#23283a"/>
-          <!-- 안광 빔 -->
           <line class="fx-beamL" x1="78" y1="62" x2="18" y2="46" stroke="#7fd4ff" stroke-width="4" stroke-linecap="round"/>
           <line class="fx-beamR" x1="112" y1="62" x2="172" y2="46" stroke="#7fd4ff" stroke-width="4" stroke-linecap="round"/>
-          <!-- 얼굴 (v1 재활용) -->
           <g class="face" id="face" transform="translate(35,0)">
             <rect x="30" y="18" width="60" height="26" rx="10" fill="#2b2b2b"/>
             <circle cx="60" cy="62" r="34" fill="#f2d3b3"/>
@@ -185,26 +178,23 @@ button:disabled:hover{background:var(--panel)}
         </g>
       </svg>
     </div>
-    <!-- 강화 게이지 오버레이 -->
-    <div class="enh-gauge-wrap" id="enh-overlay">
-      <div class="txt mono" id="enh-txt">강화 중...</div>
-      <div class="enh-gauge"><span class="gfill" id="enh-fill"></span></div>
-    </div>
   </div>
 
-  <!-- 일하기 / 강화 -->
+  <!-- 이직(판매) / 강화 -->
   <div class="main">
     <div class="panel">
-      <div class="panel-head"><span class="mono">근로 소득</span></div>
-      <div class="work-body" style="position:relative" id="work-zone">
+      <div class="panel-head"><span class="mono">헤드헌터 오퍼 — 실시간 이적 시세</span></div>
+      <div class="offer-body">
         <div class="money mono" id="ui-money">0원</div>
-        <div class="money-sub">클릭당 <b id="ui-cp" class="mono"></b> · 자동 <b id="ui-auto" class="mono"></b>/초</div>
-        <button id="btn-work">💼 일하기</button>
-        <div class="work-hint">노동에는 끝이 없다.</div>
+        <div class="money-sub">보유 자산 · 바닥나면 파산</div>
+        <div class="offer-price mono" id="ui-offer">-</div>
+        <div class="money-sub">현재 양대리 이적료</div>
+        <button id="btn-sell">🤝 이직 보내기 (판매)</button>
+        <div class="offer-hint">강화할수록 이적료가 뛴다. 판매하면 새 +0 양대리가 온다.<br>지금 팔까, 한 단계 더 노릴까 — 그것이 문제로다.</div>
       </div>
     </div>
     <div class="panel">
-      <div class="panel-head"><span class="mono">인간강화 시스템 v2.0 — 확률 공개 의무 준수</span></div>
+      <div class="panel-head"><span class="mono">인간강화 시스템 v3.0 — 확률 공개 의무 준수</span></div>
       <div class="enh-body">
         <div class="enh-row"><span>다음 단계</span><b id="enh-next"></b></div>
         <div class="enh-row"><span>성공 확률</span><b id="enh-succ" class="ok"></b></div>
@@ -212,7 +202,7 @@ button:disabled:hover{background:var(--panel)}
         <div class="prob-bar" id="prob-bar"></div>
         <div class="items" id="item-slots"></div>
         <button id="btn-enh">⚒️ 강화하기 <span id="enh-cost" class="mono"></span></button>
-        <div class="enh-note" id="enh-note">실패 시 0강 복귀(자산 유지) · 파괴 시 전부 소멸 · 🛡️는 +11강부터 사용 불가</div>
+        <div class="enh-note">실패 시 티어 시작점(+0/+5/+10/+15/+20)으로 하락 · 파괴 시 양대리 소멸(이적료 0원)<br>🛡️는 +19강 도전부터 사용 불가 · 자산이 바닥나면 파산(전체 리셋)</div>
       </div>
     </div>
   </div>
@@ -220,7 +210,7 @@ button:disabled:hover{background:var(--panel)}
   <!-- 탭 -->
   <div class="tabs">
     <button class="on" data-tab="shop">🏪 상점</button>
-    <button data-tab="ups">📈 업그레이드</button>
+    <button data-tab="ups">📈 스펙업</button>
     <button data-tab="ach">🏆 업적</button>
   </div>
   <div class="panel">
@@ -240,13 +230,31 @@ button:disabled:hover{background:var(--panel)}
     <div class="m-choices" id="ev-choices"></div>
   </div>
 </div>
+<!-- 판매 모달 -->
+<div class="modal-back" id="sell-back">
+  <div class="modal sell-modal">
+    <div class="m-tag mono">이적 계약 체결</div>
+    <div class="sell-title">🤝 이직 완료</div>
+    <div class="m-text" id="sell-text"></div>
+    <button style="width:100%;background:var(--ink);color:#fff" id="btn-next-yang">다음 양대리 영입</button>
+  </div>
+</div>
 <!-- 파괴 모달 -->
 <div class="modal-back" id="destroy-back">
   <div class="modal destroy-modal">
     <div class="m-tag mono">인사팀 공지</div>
     <div class="destroy-title">💥 파 괴 💥</div>
     <div class="m-text" id="destroy-text"></div>
-    <button style="width:100%;background:var(--ink);color:#fff" id="btn-rebirth">신입 양대리 채용하기</button>
+    <button style="width:100%;background:var(--ink);color:#fff" id="btn-rebirth">신입 양대리 영입 (자산은 유지)</button>
+  </div>
+</div>
+<!-- 파산 모달 -->
+<div class="modal-back" id="bank-back">
+  <div class="modal destroy-modal">
+    <div class="m-tag mono">신용정보원 통보</div>
+    <div class="destroy-title">💸 파 산 💸</div>
+    <div class="m-text" id="bank-text"></div>
+    <button style="width:100%;background:var(--ink);color:#fff" id="btn-bank-restart">밑바닥부터 다시 (전체 리셋)</button>
   </div>
 </div>
 <div class="toast-zone" id="toasts"></div>
@@ -254,83 +262,77 @@ button:disabled:hover{background:var(--panel)}
 <script>
 "use strict";
 /* =====================================================
-   양대리 강화하기
+   양대리 강화하기 v3 — 강화하고, 이직 보내고, 더 크게
    ===================================================== */
-const SAVE_KEY="yangup_save", META_KEY="yangup_meta";
+const SAVE_KEY="yangup_save3", META_KEY="yangup_meta3";
 
-/* ---------- 강화 테이블 (n → n+1) ---------- */
-const SUCC=[100,100,100,85,75,65,50,40,30,25,20,15,10,8,6];
-const DEST=[0,0,0,0,0,2,4,6,8,10,12,15,18,22,25];
-const SHIELD_MAX=10; // 파괴방지권은 +10→+11 시도까지만 사용 가능
-const MAX_LV=15;
-const TIERS=[[0,"인턴급"],[3,"대리급"],[6,"과장급"],[9,"임원급"],[12,"재벌급"],[15,"사무실의 신"]];
-const enhCost=n=>Math.round(1000*Math.pow(2.0,n)/100)*100;
+/* ---------- 강화 테이블 (n → n+1, 0~24) ---------- */
+const MAX_LV=25;
+const SUCC=[100,100,100,100,100, 96,92,88,84,80, 72,66,60,54,48, 42,37,32,28,24, 20,17,14,12,10];
+const DEST=[0,0,0,0,0, 0,0,1,1,2, 2,3,3,4,4, 5,5,6,6,7, 8,8,9,9,10];
+const CHECKPOINTS=[0,5,10,15,20];
+const floorOf=n=>{let f=0;for(const c of CHECKPOINTS)if(n>=c)f=c;return f;};
+const SHIELD_MAX=18; // +18→+19 시도까지만 방지권 사용 가능
+const START_MONEY=50000;
+const enhCost=n=>Math.round(300*Math.pow(1.38,n));
+const sellPrice=n=>n===0?0:Math.round(500*Math.pow(1.9,n)*saleMult());
+const TIERS=[[0,"인턴"],[3,"사원"],[5,"대리"],[8,"과장"],[11,"차장"],[14,"부장"],[17,"이사"],[20,"사장"],[23,"회장"],[25,"재벌 총수"]];
 
-/* ---------- 아이템 ---------- */
+/* ---------- 아이템 (1회성 소모품) ---------- */
 const ITEMS=[
- {id:"coffee",ico:"☕",nm:"아메리카노",de:"정신이 맑아져 성공 확률이 아주 조금 오른다",bonus:3,price:5000},
- {id:"chicken",ico:"🍗",nm:"야근치킨",de:"사기 충전! 성공 확률 소폭 상승",bonus:7,price:30000},
- {id:"iv",ico:"💉",nm:"링거",de:"몸이 되살아난다. 성공 확률 제법 상승",bonus:12,price:200000},
- {id:"praise",ico:"👏",nm:"부장의 칭찬",de:"영혼이 각성한다. 성공 확률 대폭 상승",bonus:20,price:1500000},
- {id:"shield",ico:"🛡️",nm:"파괴방지권",de:"파괴 1회 방어 (+11강부터 사용 불가)",bonus:0,price:3000000}
+ {id:"coffee",ico:"☕",nm:"아메리카노",de:"정신이 맑아져 성공 확률이 아주 조금 오른다",bonus:3,price:2000},
+ {id:"chicken",ico:"🍗",nm:"야근치킨",de:"사기 충전! 성공 확률 소폭 상승",bonus:7,price:5000},
+ {id:"iv",ico:"💉",nm:"링거",de:"몸이 되살아난다. 성공 확률 제법 상승",bonus:12,price:30000},
+ {id:"praise",ico:"👏",nm:"부장의 칭찬",de:"영혼이 각성한다. 성공 확률 대폭 상승",bonus:20,price:200000},
+ {id:"shield",ico:"🛡️",nm:"파괴방지권",de:"파괴 1회 방어 (+19강부터 사용 불가)",bonus:0,price:300000}
 ];
 
-/* ---------- 업그레이드 ---------- */
+/* ---------- 스펙업 (런 내 영구, 파산 시 리셋) ---------- */
 const UPS=[
- {id:"kb",ico:"⌨️",nm:"기계식 키보드(청축)",de:"클릭 수입 ×2",price:8000,click:2},
- {id:"mouse",ico:"🖱️",nm:"버티컬 마우스",de:"클릭 수입 ×1.5",price:30000,click:1.5},
- {id:"moni",ico:"🖥️",nm:"듀얼 모니터",de:"클릭 수입 ×2",price:120000,click:2},
- {id:"macro",ico:"🤖",nm:"매크로 스크립트",de:"자동 수입 +2/초",price:200000,auto:2},
- {id:"chair",ico:"🪑",nm:"궁극의 의자",de:"클릭 수입 ×2",price:500000,click:2},
- {id:"intern",ico:"🧑‍💻",nm:"신입 채용",de:"자동 수입 +10/초",price:1500000,auto:10},
- {id:"cafe",ico:"☕",nm:"사내 카페머신",de:"클릭 수입 ×3",price:4000000,click:3},
- {id:"ai",ico:"✨",nm:"AI 어시스턴트",de:"자동 수입 +50/초",price:20000000,auto:50},
- {id:"second",ico:"💼",nm:"세컨드잡(몰래)",de:"자동 수입 +200/초",price:150000000,auto:200},
- {id:"guru",ico:"🧘",nm:"업무의 신내림",de:"클릭 수입 ×5",price:500000000,click:5}
+ {id:"linkedin",ico:"💼",nm:"링크드인 프로필 세탁",de:"이적료 ×1.3",price:30000,sale:1.3},
+ {id:"cert",ico:"📜",nm:"자격증 19종 세트",de:"이적료 ×1.5",price:150000,sale:1.5},
+ {id:"blog",ico:"✍️",nm:"기술 블로그 운영",de:"강화 성공률 +2%p",price:400000,succ:2},
+ {id:"oss",ico:"⭐",nm:"오픈소스 스타 1k",de:"이적료 ×1.5",price:1200000,sale:1.5},
+ {id:"lang",ico:"🗣️",nm:"어학 만점",de:"이적료 ×1.5",price:6000000,sale:1.5},
+ {id:"politics",ico:"🤝",nm:"사내 정치 마스터",de:"강화 성공률 +3%p",price:20000000,succ:3},
+ {id:"hunter",ico:"🎯",nm:"헤드헌터 인맥",de:"이적료 ×2",price:80000000,sale:2},
+ {id:"brand",ico:"🌟",nm:"퍼스널 브랜딩",de:"이적료 ×2",price:500000000,sale:2},
+ {id:"legend",ico:"👑",nm:"업계의 전설",de:"강화 성공률 +5%p",price:3000000000,succ:5}
 ];
 
-/* ---------- 업적 ---------- */
+/* ---------- 업적 (영구) ---------- */
 const ACHS=[
- {id:"enh1",ico:"🔨",nm:"첫 망치질",de:"첫 강화 성공",ck:m=>m.enhOk>=1},
- {id:"lv5",ico:"🎖️",nm:"대리 졸업반",de:"+5 달성",ck:m=>m.bestLv>=5},
- {id:"lv10",ico:"👑",nm:"임원의 그릇",de:"+10 달성",ck:m=>m.bestLv>=10},
- {id:"lv15",ico:"🌈",nm:"사무실의 신",de:"+15 달성",ck:m=>m.bestLv>=15},
+ {id:"sale1",ico:"🤝",nm:"첫 이적 계약",de:"양대리를 처음 이직시킴",ck:m=>m.sales>=1},
+ {id:"sale15",ico:"💎",nm:"대형 계약",de:"+15 이상으로 판매",ck:m=>m.bestSaleLv>=15},
+ {id:"sale20",ico:"🏆",nm:"세기의 이적",de:"+20 이상으로 판매",ck:m=>m.bestSaleLv>=20},
+ {id:"lv25",ico:"🌈",nm:"재벌 총수",de:"+25 달성",ck:m=>m.bestLv>=25},
  {id:"dest1",ico:"💥",nm:"첫 산화",de:"첫 파괴 경험",ck:m=>m.destroys>=1},
  {id:"dest5",ico:"🔥",nm:"불사조 정신",de:"파괴 5회",ck:m=>m.destroys>=5},
- {id:"gen10",ico:"👨‍👦",nm:"양씨 가문의 저력",de:"10대 양대리 도달",ck:m=>m.gen>=10},
- {id:"clk1k",ico:"🖱️",nm:"손가락 예열",de:"누적 1,000클릭",ck:m=>m.clicks>=1000},
- {id:"clk10k",ico:"🩹",nm:"손목 보호대 필요",de:"누적 10,000클릭",ck:m=>m.clicks>=10000},
+ {id:"bank1",ico:"💸",nm:"신용불량 강화술사",de:"첫 파산",ck:m=>m.bankrupts>=1},
+ {id:"bank3",ico:"🧗",nm:"오뚝이",de:"파산 3회 후에도 재기",ck:m=>m.bankrupts>=3},
+ {id:"gen20",ico:"👨‍👦",nm:"양씨 인력사무소",de:"20대 양대리 도달",ck:m=>m.gen>=20},
+ {id:"try100",ico:"🎰",nm:"강화 중독",de:"누적 강화 시도 100회",ck:m=>m.tries>=100},
+ {id:"try500",ico:"🫠",nm:"망치와 한 몸",de:"누적 강화 시도 500회",ck:m=>m.tries>=500},
  {id:"rich1",ico:"💰",nm:"영끌 가능",de:"자산 1억 보유",ck:m=>m.peakMoney>=100000000},
- {id:"iv10",ico:"💉",nm:"수액 단골",de:"링거 누적 10개 사용",ck:m=>m.ivUsed>=10},
- {id:"drop3",ico:"📉",nm:"마음의 소리: 접어라",de:"강화 실패 0강 복귀 3연속",ck:m=>m.dropStreak>=3},
- {id:"praise1",ico:"👏",nm:"칭찬은 양대리를 춤추게",de:"부장의 칭찬 사용",ck:m=>m.praiseUsed>=1},
- {id:"allup",ico:"🛠️",nm:"풀세팅",de:"업그레이드 전부 구매",ck:m=>m.allUps},
- {id:"try50",ico:"🎰",nm:"강화 중독",de:"누적 강화 시도 50회",ck:m=>m.tries>=50}
+ {id:"rich2",ico:"🏦",nm:"건물주의 꿈",de:"자산 100억 보유",ck:m=>m.peakMoney>=10000000000},
+ {id:"shield3",ico:"🛡️",nm:"목숨은 소중해",de:"파괴방지권으로 3회 생존",ck:m=>m.shieldSaves>=3},
+ {id:"allup",ico:"🛠️",nm:"풀스펙 인간",de:"스펙업 전부 구매",ck:m=>m.allUps}
 ];
 
 /* ---------- 상태 ---------- */
-let R=null,M=null,enhBusy=false;
-function newRun(){return{money:0,lv:0,ups:{},items:{coffee:0,chicken:0,iv:0,praise:0,shield:0}};}
-function newMeta(){return{gen:1,ach:[],clicks:0,tries:0,enhOk:0,destroys:0,bestLv:0,peakMoney:0,ivUsed:0,praiseUsed:0,dropStreak:0,allUps:false};}
+let R=null,M=null;
+function newRun(){return{money:START_MONEY,lv:0,ups:{},items:{coffee:0,chicken:0,iv:0,praise:0,shield:0}};}
+function newMeta(){return{gen:1,ach:[],tries:0,sales:0,totalSale:0,bestSaleLv:0,destroys:0,bankrupts:0,bestLv:0,peakMoney:0,shieldSaves:0,allUps:false};}
 const saveRun=()=>localStorage.setItem(SAVE_KEY,JSON.stringify(R));
 const saveMeta=()=>localStorage.setItem(META_KEY,JSON.stringify(M));
 function load(){
   try{R=JSON.parse(localStorage.getItem(SAVE_KEY))||newRun();}catch(e){R=newRun();}
-  R.items=Object.assign(newRun().items,R.items||{}); // 구버전 세이브에 새 아이템 키 병합
+  R.items=Object.assign(newRun().items,R.items||{});
   try{M=Object.assign(newMeta(),JSON.parse(localStorage.getItem(META_KEY))||{});}catch(e){M=newMeta();}
 }
+function saleMult(){let m=1;for(const u of UPS)if(R.ups[u.id]&&u.sale)m*=u.sale;return m;}
+function succPerk(){let p=0;for(const u of UPS)if(R.ups[u.id]&&u.succ)p+=u.succ;return p;}
 
-/* ---------- 수치 ---------- */
-function clickPower(){
-  let m=100*(1+R.lv*0.6);
-  for(const u of UPS)if(R.ups[u.id]&&u.click)m*=u.click;
-  return Math.round(m);
-}
-function autoPower(){
-  let a=0;
-  for(const u of UPS)if(R.ups[u.id]&&u.auto)a+=u.auto;
-  return Math.round(a*100*(1+R.lv*0.6))/1; // 자동 1 = 100원 기준
-}
 const UNITS=[[1e16,"경"],[1e12,"조"],[1e8,"억"],[1e4,"만"]];
 function fmt(n){
   n=Math.floor(n);
@@ -341,167 +343,169 @@ function fmt(n){
   return n.toLocaleString()+"원";
 }
 
-/* ---------- 클리커 ---------- */
-function earn(v){
-  R.money+=v;
-  if(R.money>M.peakMoney){M.peakMoney=R.money;}
-  checkAch();
-}
-let lastPopAt=0;
-function work(x,y){
-  const cp=clickPower();
-  earn(cp);
-  M.clicks++;
-  clicksSinceEv++;
-  maybeEvent();
-  renderMoney();
-  if(M.clicks%5===0){renderShop();renderUps();}
-  // 클릭 팝 (과도 생성 방지: 60ms 스로틀)
-  const now=Date.now();
-  if(now-lastPopAt>60){
-    lastPopAt=now;
-    const zone=document.getElementById("work-zone");
-    const p=document.createElement("span");
-    p.className="click-pop mono";
-    p.textContent="+"+fmt(cp);
-    p.style.left=(x??(30+Math.random()*60))+"%";
-    p.style.top=(y??45)+"%";
-    zone.appendChild(p);
-    setTimeout(()=>p.remove(),700);
-  }
-  if(M.clicks%20===0){saveRun();saveMeta();}
-}
-
 /* ---------- 강화 ---------- */
-function currentBonus(){
-  let b=0;
-  for(const it of ITEMS){
-    if(it.bonus&&document.getElementById("chk-"+it.id)?.checked&&R.items[it.id]>0)b+=it.bonus;
-  }
-  return b;
-}
-function probs(){ // 표시용: 아이템 보너스 미반영(기본 확률 고정)
-  const n=R.lv;
-  const d=DEST[n];
-  const s=Math.min(SUCC[n],100-d);
+let attemptsSinceEv=0;
+function probs(){ // 표시용: 소모품 보너스 미반영, 영구 스펙업만 반영
+  const n=R.lv,d=DEST[n];
+  const s=Math.min(SUCC[n]+succPerk(),100-d);
   return{s,d,f:100-s-d};
 }
 function tryEnhance(){
-  if(enhBusy)return;
   const n=R.lv;
   if(n>=MAX_LV)return;
   const cost=enhCost(n);
-  if(R.money<cost){toast("돈이 부족하다. 노동하라.");return;}
-  enhBusy=true;
+  if(R.money<cost){checkBankrupt();return;}
   R.money-=cost;
-  // 아이템 소모
   const used={};
   for(const it of ITEMS){
     const chk=document.getElementById("chk-"+it.id);
-    if(chk&&chk.checked&&R.items[it.id]>0){used[it.id]=true;}
+    if(chk&&chk.checked&&R.items[it.id]>0)used[it.id]=true;
   }
   const bonus=Object.keys(used).filter(k=>k!=="shield").reduce((a,k)=>a+ITEMS.find(i=>i.id===k).bonus,0);
   const shieldUsed=!!used.shield&&n<=SHIELD_MAX;
-  for(const k in used){
-    R.items[k]--;
-    if(k==="iv")M.ivUsed++;
-    if(k==="praise")M.praiseUsed++;
-  }
-  M.tries++;
-  enhBusy=false;
+  for(const k in used)R.items[k]--;
+  M.tries++;attemptsSinceEv++;
   resolveEnhance(n,bonus,shieldUsed);
+  maybeEvent();
   saveRun();saveMeta();
 }
 function resolveEnhance(n,bonus,shieldUsed){
   const d=DEST[n];
-  const s=Math.min(SUCC[n]+bonus,100-d);
+  const s=Math.min(SUCC[n]+succPerk()+bonus,100-d);
   const r=Math.random()*100;
   const stage=document.getElementById("stage");
   if(r<s){ // 성공
     R.lv++;
-    M.enhOk++;M.dropStreak=0;
     if(R.lv>M.bestLv)M.bestLv=R.lv;
     stage.classList.remove("enh-success");void stage.offsetWidth;
     stage.classList.add("enh-success");
     toast(`✨ 강화 성공! +${R.lv} ${tierName(R.lv)} 양대리`);
-    if(R.lv===MAX_LV)toast("🌈 +15 달성. 그는 이제 사무실의 신이다.");
+    if(R.lv===MAX_LV)toast("🌈 +25 달성. 재벌 총수 양대리. 이적료가 천문학적이다.");
   }else if(r<s+d){ // 파괴
     if(shieldUsed){
-      M.dropStreak=0;
+      M.shieldSaves++;
       stage.classList.remove("enh-drop");void stage.offsetWidth;
       stage.classList.add("enh-drop");
       toast("🛡️ 파괴방지권이 산화를 막았다! 단계 유지.");
     }else{
-      M.destroys++;M.dropStreak=0;
+      M.destroys++;M.gen++;
       destroySequence(n);
     }
-  }else{ // 실패: 0강 복귀 (돈/업그레이드/아이템 유지)
-    if(n>0){
-      R.lv=0;M.dropStreak++;
+  }else{ // 실패: 체크포인트로 하락
+    const f=floorOf(n);
+    if(f<n){
+      R.lv=f;
       stage.classList.remove("enh-drop");void stage.offsetWidth;
       stage.classList.add("enh-drop");
-      toast(`📉 강화 실패... +${n} 양대리가 초심(+0)으로 돌아갔다. 자산은 무사하다.`);
+      toast(`📉 강화 실패... +${f}(${tierName(f)})으로 하락. 자산은 무사하다.`);
     }else{
-      toast("강화 실패. 이미 바닥이라 잃을 단계도 없다.");
+      toast("강화 실패. 체크포인트 위라 잃을 것도 없다.");
     }
   }
   checkAch();
   renderAll();
+  checkBankrupt();
 }
 function destroySequence(n){
   const stage=document.getElementById("stage");
   stage.classList.add("shake");
   setTimeout(()=>stage.classList.remove("shake"),700);
-  const eul=["모니터와 한 몸이 되어 산화했다.","강화의 빛 속으로 사라졌다. 책상만 남았다.","'한 번만 더'라는 유언을 남겼다.","연기가 되어 환풍구로 퇴근했다.","사원증만 남기고 증발했다."];
+  const eul=["강화의 빛 속으로 사라졌다. 책상만 남았다.","'한 번만 더'라는 유언을 남겼다.","연기가 되어 환풍구로 퇴근했다.","사원증만 남기고 증발했다.","이적 시장에서 영구 제명됐다."];
   setTimeout(()=>{
     document.getElementById("destroy-text").textContent=
-`${M.gen}대 양대리, +${n} 강화 도중 ${eul[Math.floor(Math.random()*eul.length)]}
+`+${n} 강화 도중 ${M.gen-1}대 양대리가 ${eul[Math.floor(Math.random()*eul.length)]}
 
-누적 기록 — 강화 시도 ${M.tries}회 · 파괴 ${M.destroys}회 · 역대 최고 +${M.bestLv}
+이적료 0원. 투자금은 증발했지만 남은 자산과 스펙업은 유지된다.
 
-자산, 강화 단계, 업그레이드 전부 소멸.
-업적과 기록만이 그를 기억한다.`;
+누적 파괴 ${M.destroys}회 · 역대 최고 +${M.bestLv}`;
     document.getElementById("destroy-back").classList.add("on");
   },750);
 }
 document.getElementById("btn-rebirth").onclick=()=>{
-  M.gen++;
-  R=newRun();
-  saveRun();saveMeta();
+  R.lv=0;
   document.getElementById("destroy-back").classList.remove("on");
-  toast(`🧑‍💼 ${M.gen}대 양대리 입사. 아무것도 모른 채 웃고 있다.`);
-  checkAch();renderAll();
+  toast(`🧑‍💼 ${M.gen}대 양대리 영입. 아무것도 모른 채 웃고 있다.`);
+  saveRun();saveMeta();renderAll();
+  checkBankrupt();
 };
 
-/* ---------- 돌발 이벤트 ---------- */
-let clicksSinceEv=0;
+/* ---------- 판매(이직) ---------- */
+function sellYang(){
+  if(R.lv===0){toast("+0 양대리는 아무도 안 데려간다. 강화부터 하자.");return;}
+  const price=sellPrice(R.lv);
+  const lv=R.lv;
+  R.money+=price;
+  if(R.money>M.peakMoney)M.peakMoney=R.money;
+  M.sales++;M.totalSale+=price;M.gen++;
+  if(lv>M.bestSaleLv)M.bestSaleLv=lv;
+  const dest=["판교 P사","여의도 금융사","실리콘밸리 스타트업","경쟁사 개발실","대기업 혁신TF","유니콘 스타트업"];
+  document.getElementById("sell-text").textContent=
+`+${lv} ${tierName(lv)} 양대리가 ${dest[Math.floor(Math.random()*dest.length)]}(으)로 이직했다.
+
+이적료 ${fmt(price)} 입금 완료.
+
+떠나는 뒷모습이 눈부시다. 다음 양대리를 키우자.`;
+  document.getElementById("sell-back").classList.add("on");
+  R.lv=0;
+  checkAch();saveRun();saveMeta();renderAll();
+}
+document.getElementById("btn-next-yang").onclick=()=>{
+  document.getElementById("sell-back").classList.remove("on");
+  toast(`🧑‍💼 ${M.gen}대 양대리 영입.`);
+};
+
+/* ---------- 파산 ---------- */
+function checkBankrupt(){
+  if(R.lv===0&&R.money<enhCost(0)){
+    M.bankrupts++;
+    document.getElementById("bank-text").textContent=
+`잔고 ${fmt(R.money)}. +0 강화비용 ${fmt(enhCost(0))}조차 낼 수 없다.
+
+${M.gen}대에 걸친 양씨 인력사무소가 문을 닫는다.
+스펙업, 아이템, 전부 압류.
+
+누적 이적료 ${fmt(M.totalSale)} · 역대 최고 +${M.bestLv} · 파산 ${M.bankrupts}회
+업적과 기록만이 남았다.`;
+    document.getElementById("bank-back").classList.add("on");
+    checkAch();saveMeta();
+  }
+}
+document.getElementById("btn-bank-restart").onclick=()=>{
+  M.gen++;
+  R=newRun();
+  document.getElementById("bank-back").classList.remove("on");
+  toast(`🌅 ${M.gen}대 양대리, 시작 자본 ${fmt(START_MONEY)}으로 재기.`);
+  saveRun();saveMeta();renderAll();
+};
+
+/* ---------- 돌발 이벤트 (강화 시도 중 발생) ---------- */
+function evScale(){return Math.max(3000,Math.round(enhCost(R.lv)*4+sellPrice(Math.max(1,R.lv))*0.05));}
 const EVENTS=[
- {tag:"경사",t:"부장: \"이번 분기 실적 좋았어! 특별 상여금이다!\"",c:[["감사히 받는다 (+클릭 400회분)",cp=>{earn(cp*400);return"통장에 숫자가 꽂혔다. 이 맛에 회사 다닌다.";}]]},
- {tag:"도박",t:"박대리 속삭임: \"양대리님, 이 코인 지금 사면 무조건 갑니다.\"",c:[
-   ["자산 30% 올인",cp=>{const bet=Math.floor(R.money*0.3);R.money-=bet;if(Math.random()<0.5){earn(bet*2.2);return"떡상! 박대리가 스승으로 보인다.";}return"떡락. 박대리는 오늘 반차를 냈다.";}],
-   ["소액만 (클릭 50회분)",cp=>{const bet=cp*50;if(R.money<bet)return"그 소액조차 없다. 조용히 창을 닫았다.";R.money-=bet;if(Math.random()<0.5){earn(bet*2.5);return"소소한 익절. 인생은 분산투자.";}return"소소한 손절. 수업료라 치자.";}],
+ {tag:"경사",t:"헤드헌터가 몰래 찔러준다. \"요즘 양대리님 몸값이 오르는 중입니다.\"",c:[["기분 좋게 듣는다 (+보너스)",sc=>{R.money+=sc*3;return"소문만으로 지갑이 두둑해졌다. 평판이 곧 돈이다.";}]]},
+ {tag:"도박",t:"박대리 속삭임: \"이 코인 지금 사면 무조건 갑니다.\"",c:[
+   ["자산 30% 올인",sc=>{const bet=Math.floor(R.money*0.3);R.money-=bet;if(Math.random()<0.5){R.money+=Math.floor(bet*2.2);return"떡상! 박대리가 스승으로 보인다.";}return"떡락. 박대리는 오늘 반차를 냈다.";}],
    ["무시한다",()=>"3일 뒤 그 코인은 상장폐지됐다. 현명했다."]]},
- {tag:"지출",t:"청첩장 3장이 동시에 도착했다. 전부 다음 주 토요일이다.",c:[
-   ["전부 참석 (-클릭 150회분)",cp=>{R.money=Math.max(0,R.money-cp*150);return"축의금 3연타. 뷔페 본전은 뽑았다.";}],
-   ["봉투만 보낸다 (-클릭 90회분)",cp=>{R.money=Math.max(0,R.money-cp*90);return"마음만은 하객석 맨 앞줄이다.";}]]},
- {tag:"경사",t:"연말정산 결과 도착. 두근두근.",c:[["확인한다",cp=>{if(Math.random()<0.6){earn(cp*250);return"13월의 월급! 환급 대성공.";}R.money=Math.max(0,R.money-cp*100);return"토해내라고 한다. 13월의 세금.";}]]},
+ {tag:"지출",t:"청첩장 3장이 동시에 도착했다. 전부 다음 주 토요일.",c:[
+   ["전부 참석 (축의금 지출)",sc=>{R.money=Math.max(0,R.money-sc);return"축의금 3연타. 뷔페 본전은 뽑았다.";}],
+   ["봉투만 보낸다 (절반 지출)",sc=>{R.money=Math.max(0,R.money-Math.floor(sc/2));return"마음만은 하객석 맨 앞줄이다.";}]]},
+ {tag:"경사",t:"연말정산 결과 도착. 두근두근.",c:[["확인한다",sc=>{if(Math.random()<0.6){R.money+=sc*2;return"13월의 월급! 환급 대성공.";}R.money=Math.max(0,R.money-sc);return"토해내라고 한다. 13월의 세금.";}]]},
  {tag:"회식",t:"부장: \"오늘 회식 어때? (거절 불가 아님, 진짜로)\"",c:[
-   ["참석 (-클릭 80회분, 칭찬 확률)",cp=>{R.money=Math.max(0,R.money-cp*80);if(Math.random()<0.5){R.items.praise++;return"부장 기분이 좋아져 '부장의 칭찬'을 획득했다!";}return"삼겹살은 맛있었다. 그걸로 됐다.";}],
+   ["참석 (지출, 칭찬 확률)",sc=>{R.money=Math.max(0,R.money-Math.floor(sc/2));if(Math.random()<0.5){R.items.praise++;return"부장 기분이 좋아져 '부장의 칭찬'을 획득했다!";}return"삼겹살은 맛있었다. 그걸로 됐다.";}],
    ["집에 간다",()=>"집 밥이 제일 맛있다. 부장은 조금 서운해 보였다."]]},
- {tag:"업무",t:"복합기가 또 고장났다. 전 직원이 당신을 쳐다본다.",c:[["고쳐준다 (+클릭 120회분)",cp=>{earn(cp*120);return"토너를 흔들었더니 됐다. 수리비 명목의 커피 기프티콘이 쏟아졌다.";}],["모른 척한다",()=>"총무팀이 A/S를 불렀다. 당신의 신비주의는 지켜졌다."]]},
- {tag:"쇼핑",t:"중고장터에 '기계식 키보드(거의 새것)'이 반값에 올라왔다.",c:[["산다 (-클릭 60회분)",cp=>{R.money=Math.max(0,R.money-cp*60);if(Math.random()<0.6){earn(cp*140);return"진짜 새것이었다! 되팔아 차익 실현. 당근의 신.";}return"자판 W가 안 눌린다. 어쩐지 쌌다.";}],["패스",()=>"충동구매를 참았다. 오늘의 승리."]]},
- {tag:"복지",t:"사내 건강검진에서 '링거 무료 쿠폰'이 나왔다.",c:[["받는다 (링거 +1)",()=>{R.items.iv++;return"회사가 내 몸을 갈아넣을 준비를 해준다. 감동적이다.";}]]},
- {tag:"도박",t:"편의점에서 로또를 발견했다.",c:[["한 장 (-클릭 10회분)",cp=>{R.money=Math.max(0,R.money-cp*10);if(Math.random()<0.02){earn(cp*5000);return"3등 당첨!!! 사무실에서 비명을 질렀다.";}return"낙첨. 토요일 밤의 꿈은 짧았다.";}],["안 산다",()=>"확률을 아는 자의 선택."]]},
- {tag:"야근",t:"금요일 밤, 긴급 야근 요청. 수당은 두둑하다.",c:[["한다 (+클릭 300회분)",cp=>{earn(cp*300);return"주말과 맞바꾼 수당. 통장은 웃고 몸은 운다.";}],["거절한다",()=>"저녁이 있는 삶을 지켰다. 지갑은 조금 가볍지만."]]},
- {tag:"지출",t:"지하철에서 졸다가 지갑을 잃어버렸다!",c:[["유실물센터로 달려간다",cp=>{if(Math.random()<0.5){return"찾았다! 대한민국 시민의식 만세.";}R.money=Math.max(0,R.money-cp*100);return"현금만 사라져 있었다. 시민의식에도 예외는 있다.";}]]},
- {tag:"외주",t:"지인: \"간단한 홈페이지 하나만... 500 줄게.\"",c:[["받는다 (+클릭 600회분)",cp=>{earn(cp*600);return"'간단한'은 거짓말이었지만 돈은 진짜였다.";}],["거절한다",()=>"주말을 지켰다. '간단한 홈페이지'란 존재하지 않는다."]]},
- {tag:"복지",t:"사내 벼룩시장이 열렸다. 총무팀이 '파괴방지권(정품)'을 반값에 판다(?)",c:[["산다 (-150만원, 방지권 +1)",cp=>{if(R.money<1500000)return"돈이 모자라다. 반값도 비싸다.";R.money-=1500000;R.items.shield++;return"파괴방지권 획득. 출처는 묻지 않기로 했다.";}],["구경만",()=>"눈으로만 쇼핑했다. 그것도 재미다."]]},
- {tag:"동물",t:"주차장 길고양이 '널포인터'가 당신을 빤히 본다.",c:[["츄르를 사준다 (-클릭 15회분)",cp=>{R.money=Math.max(0,R.money-cp*15);R.items.coffee++;return"고양이를 챙기는 당신을 본 동료가 커피를 사줬다. 세상은 돌고 돈다.";}],["바쁘다, 지나친다",()=>"널포인터는 옆 회사 사람에게 갔다. 참조가 옮겨졌다."]]},
- {tag:"심부름",t:"부장: \"양대리, 임원회의 자료 좀 뽑아와. 급해!\"",c:[["광속으로 처리한다",cp=>{if(Math.random()<0.5){R.items.praise++;return"완벽한 심부름. '부장의 칭찬'을 획득했다!";}earn(cp*50);return"수고했다며 커피값을 쥐여줬다. 나쁘지 않다.";}],["프린터 고장을 핑계로 뭉갠다",()=>"부장이 직접 뽑았다. 어색한 침묵이 이틀 갔다."]]}
+ {tag:"업무",t:"복합기가 또 고장났다. 전 직원이 당신을 쳐다본다.",c:[["고쳐준다 (+수리비)",sc=>{R.money+=sc;return"토너를 흔들었더니 됐다. 감사 커피 기프티콘이 쏟아졌다.";}],["모른 척한다",()=>"총무팀이 A/S를 불렀다. 신비주의는 지켜졌다."]]},
+ {tag:"복지",t:"사내 건강검진에서 '링거 무료 쿠폰'이 나왔다.",c:[["받는다 (링거 +1)",()=>{R.items.iv++;return"회사가 내 몸을 갈아넣을 준비를 해준다. 감동이다.";}]]},
+ {tag:"도박",t:"편의점 로또가 눈에 들어온다.",c:[["한 장 산다",sc=>{R.money=Math.max(0,R.money-Math.floor(sc/10));if(Math.random()<0.02){R.money+=sc*30;return"3등 당첨!!! 사무실에서 비명을 질렀다.";}return"낙첨. 토요일 밤의 꿈은 짧았다.";}],["안 산다",()=>"확률을 아는 자의 선택."]]},
+ {tag:"야근",t:"긴급 야근 요청. 수당은 두둑하다.",c:[["한다 (+수당)",sc=>{R.money+=sc*2;return"주말과 맞바꾼 수당. 통장은 웃고 몸은 운다.";}],["거절한다",()=>"저녁이 있는 삶을 지켰다."]]},
+ {tag:"지출",t:"지하철에서 졸다 지갑을 잃어버렸다!",c:[["유실물센터로 달려간다",sc=>{if(Math.random()<0.5)return"찾았다! 대한민국 시민의식 만세.";R.money=Math.max(0,R.money-sc);return"현금만 사라져 있었다. 시민의식에도 예외는 있다.";}]]},
+ {tag:"외주",t:"지인: \"간단한 홈페이지 하나만... 사례할게.\"",c:[["받는다 (+외주비)",sc=>{R.money+=sc*4;return"'간단한'은 거짓말이었지만 돈은 진짜였다.";}],["거절한다",()=>"주말을 지켰다. '간단한 홈페이지'란 존재하지 않는다."]]},
+ {tag:"복지",t:"사내 벼룩시장. 총무팀이 '파괴방지권(정품)'을 반값에 판다(?)",c:[["산다 (-15만원)",()=>{if(R.money<150000)return"돈이 모자라다. 반값도 비싸다.";R.money-=150000;R.items.shield++;return"파괴방지권 획득. 출처는 묻지 않기로 했다.";}],["구경만",()=>"눈으로만 쇼핑했다."]]},
+ {tag:"동물",t:"주차장 길고양이 '널포인터'가 당신을 빤히 본다.",c:[["츄르를 사준다",sc=>{R.money=Math.max(0,R.money-Math.floor(sc/20));R.items.coffee++;return"고양이를 챙기는 당신에게 동료가 커피를 사줬다. 세상은 돌고 돈다.";}],["지나친다",()=>"널포인터는 옆 회사 사람에게 갔다. 참조가 옮겨졌다."]]},
+ {tag:"심부름",t:"부장: \"양대리, 임원회의 자료 좀. 급해!\"",c:[["광속 처리",sc=>{if(Math.random()<0.5){R.items.praise++;return"완벽한 심부름. '부장의 칭찬' 획득!";}R.money+=Math.floor(sc/2);return"수고비로 커피값을 쥐여줬다.";}],["프린터 고장 핑계",()=>"부장이 직접 뽑았다. 어색한 침묵이 이틀 갔다."]]},
+ {tag:"세금",t:"국세청 알림: 이적료 소득에 대한 세무조사 안내(?!)",c:[["성실 납부 (자산 10%)",()=>{const tax=Math.floor(R.money*0.1);R.money-=tax;return`세금 ${fmt(tax)} 납부. 유리지갑은 오늘도 투명하다.`;}],["세무사 선임 (자산 3%)",()=>{const fee=Math.floor(R.money*0.03);R.money-=fee;if(Math.random()<0.7)return"세무사가 깔끔하게 방어했다. 수수료가 아깝지 않다.";R.money-=Math.floor(R.money*0.08);return"세무사도 못 막았다. 추가 납부 통지서가 도착했다.";}]]}
 ];
 function maybeEvent(){
-  if(clicksSinceEv>40&&Math.random()<0.02){
-    clicksSinceEv=0;
+  if(attemptsSinceEv>12&&Math.random()<0.06){
+    attemptsSinceEv=0;
     openEvent(EVENTS[Math.floor(Math.random()*EVENTS.length)]);
   }
 }
@@ -513,10 +517,12 @@ function openEvent(ev){
     const b=document.createElement("button");
     b.textContent=label;
     b.onclick=()=>{
-      const msg=fn(clickPower());
+      const msg=fn(evScale());
       document.getElementById("ev-back").classList.remove("on");
+      if(R.money>M.peakMoney)M.peakMoney=R.money;
       toast(msg);
       checkAch();renderAll();saveRun();saveMeta();
+      checkBankrupt();
     };
     box.appendChild(b);
   });
@@ -526,12 +532,12 @@ function openEvent(ev){
 /* ---------- 업적 ---------- */
 function checkAch(){
   if(!M.allUps&&UPS.every(u=>R.ups[u.id]))M.allUps=true;
+  if(R.money>M.peakMoney)M.peakMoney=R.money;
   for(const a of ACHS){
     if(!M.ach.includes(a.id)&&a.ck(M)){
       M.ach.push(a.id);
       toast(`🏆 업적 달성: ${a.nm}`);
-      saveMeta();
-      renderAch();
+      saveMeta();renderAch();
     }
   }
 }
@@ -539,18 +545,21 @@ function checkAch(){
 /* ---------- 렌더 ---------- */
 const $=id=>document.getElementById(id);
 function tierName(lv){let t=TIERS[0][1];for(const[min,nm]of TIERS)if(lv>=min)t=nm;return t;}
-function tierClass(lv){return lv>=15?"t5":lv>=12?"t4":lv>=9?"t3":lv>=6?"t2":lv>=3?"t1":"";}
+function tierClass(lv){return lv>=25?"t5":lv>=20?"t4":lv>=15?"t3":lv>=10?"t2":lv>=5?"t1":"";}
 function renderMoney(){
   $("ui-money").textContent=fmt(R.money);
-  $("ui-cp").textContent=fmt(clickPower());
-  $("ui-auto").textContent=fmt(autoPower());
-  $("btn-enh").disabled=enhBusy||R.lv>=MAX_LV||R.money<enhCost(R.lv);
+  const p=sellPrice(R.lv);
+  const of=$("ui-offer");
+  of.textContent=p?fmt(p):"오퍼 없음 (+0)";
+  of.className="offer-price mono"+(p?"":" zero");
+  $("btn-sell").disabled=R.lv===0;
+  $("btn-enh").disabled=R.lv>=MAX_LV||R.money<enhCost(R.lv);
 }
 function renderStage(){
   $("ui-lv").textContent="+"+R.lv;
   $("ui-tier").textContent=tierName(R.lv)+(R.lv>=MAX_LV?" — 만렙":"");
-  $("ui-best").textContent=`역대 최고 +${M.bestLv} · 누적 파괴 ${M.destroys}회`;
-  $("ui-meta").textContent=`${M.gen}대 양대리`;
+  $("ui-best").textContent=`역대 최고 +${M.bestLv} · 이적 ${M.sales}회 · 파괴 ${M.destroys}회 · 파산 ${M.bankrupts}회`;
+  $("ui-meta").textContent=`${M.gen}대 양대리 · 누적 이적료 ${fmt(M.totalSale)}`;
   $("char-tier").className="char-wrap "+tierClass(R.lv);
 }
 function renderEnh(){
@@ -560,18 +569,17 @@ function renderEnh(){
     $("enh-succ").textContent="-";$("enh-risk").textContent="-";
     $("prob-bar").innerHTML=`<span class="p-s" style="width:100%"></span>`;
     $("btn-enh").disabled=true;
-    $("btn-enh").innerHTML="🌈 강화 완료 — 사무실의 신";
-    $("enh-note").textContent="더 이상 강화할 인간이 아니다.";
+    $("btn-enh").innerHTML="🌈 강화 완료 — 재벌 총수";
     return;
   }
   const p=probs();
   $("enh-next").textContent=`+${n} → +${n+1} (${tierName(n+1)})`;
   $("enh-succ").textContent=p.s+"%";
   $("enh-succ").className=p.s>=60?"ok":p.s>=25?"warn":"bad";
-  $("enh-risk").innerHTML=`실패(0강 복귀) ${p.f}% / <span style="color:var(--danger)">파괴 ${p.d}%</span>`;
+  $("enh-risk").innerHTML=`실패(+${floorOf(n)} 하락) ${p.f}% / <span style="color:var(--danger)">파괴 ${p.d}%</span>`;
   $("prob-bar").innerHTML=
    `<span class="p-s" style="width:${p.s}%"></span><span class="p-f" style="width:${p.f}%"></span><span class="p-d" style="width:${p.d}%"></span>`;
-  $("btn-enh").disabled=enhBusy||R.money<enhCost(n);
+  $("btn-enh").disabled=R.money<enhCost(n);
   $("enh-cost").textContent="("+fmt(enhCost(n))+")";
 }
 function renderItems(){
@@ -586,10 +594,9 @@ function renderItems(){
     const l=document.createElement("label");
     l.className="item-check"+(usable?"":" none");
     l.innerHTML=`<input type="checkbox" id="chk-${it.id}" ${usable?"":"disabled"} ${prev[it.id]&&usable?"checked":""}>
-      <span>${it.ico} ${it.nm}</span><span style="color:var(--dim);font-size:11px">${locked?"고단계 사용 불가":it.de}</span><span class="cnt mono">×${cnt}</span>`;
+      <span>${it.ico} ${it.nm}</span><span style="color:var(--dim);font-size:11px">${locked?"고단계 사용 불가":""}</span><span class="cnt mono">×${cnt}</span>`;
     box.appendChild(l);
   }
-  box.querySelectorAll("input").forEach(i=>i.onchange=renderEnh);
 }
 function renderShop(){
   const box=$("tab-shop");box.innerHTML="";
@@ -636,9 +643,8 @@ function toast(msg){
 }
 
 /* ---------- 입력 ---------- */
-$("btn-work").onclick=e=>work();
-$("btn-work").addEventListener("keydown",e=>{if(e.code==="Space"||e.code==="Enter")e.preventDefault();});
 $("btn-enh").onclick=tryEnhance;
+$("btn-sell").onclick=sellYang;
 document.querySelectorAll(".tabs button").forEach(b=>{
   b.onclick=()=>{
     document.querySelectorAll(".tabs button").forEach(x=>x.classList.remove("on"));
@@ -646,12 +652,6 @@ document.querySelectorAll(".tabs button").forEach(b=>{
     ["shop","ups","ach"].forEach(t=>$("tab-"+t).style.display=t===b.dataset.tab?"grid":"none");
   };
 });
-
-/* ---------- 자동 수입 루프 ---------- */
-setInterval(()=>{
-  const a=autoPower();
-  if(a>0){earn(a);renderMoney();renderEnh();}
-},1000);
 setInterval(()=>{saveRun();saveMeta();},5000);
 
 /* ---------- 시작 ---------- */
@@ -659,6 +659,7 @@ load();
 checkAch();
 renderAll();
 renderAch();
+checkBankrupt();
 
 /* ---------- 개발용 ---------- */
 window.debug={
