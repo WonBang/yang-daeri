@@ -272,8 +272,8 @@ const SUCC=[100,100,100,100,100, 97,95,93,91,89, 87,85,82,79,76, 68,64,60,56,52,
 const DEST=[0,0,0,0,0, 0,0,1,1,1, 2,2,2,3,3, 3,4,4,4,5, 6,7,8,9,10];
 const SHIELD_MAX=18; // +18→+19 시도까지만 방지권 사용 가능
 const START_MONEY=50000;
-const enhCost=n=>Math.round(1000*Math.pow(1.32,n));
-const sellPrice=n=>n===0?0:Math.round(500*Math.pow(1.9,n)*saleMult());
+const enhCost=n=>Math.round(1000*Math.pow(1.40,n));
+const sellPrice=n=>n===0?0:Math.round(700*Math.pow(1.75,n)*saleMult());
 const TIERS=[[0,"인턴"],[3,"사원"],[5,"대리"],[8,"과장"],[11,"차장"],[14,"부장"],[17,"이사"],[20,"사장"],[23,"회장"],[25,"재벌 총수"]];
 
 /* ---------- 아이템 (1회성 소모품) ---------- */
@@ -377,7 +377,6 @@ function resolveEnhance(n,bonus,shieldUsed){
     if(R.lv>M.bestLv)M.bestLv=R.lv;
     stage.classList.remove("enh-success");void stage.offsetWidth;
     stage.classList.add("enh-success");
-    toast(`✨ 강화 성공! +${R.lv} ${tierName(R.lv)} 양대리`);
     if(R.lv===MAX_LV)toast("🌈 +25 달성. 재벌 총수 양대리. 이적료가 천문학적이다.");
   }else if(r<s+d){ // 파괴
     if(shieldUsed){
