@@ -408,19 +408,9 @@ function tryEnhance(){
     if(k==="praise")M.praiseUsed++;
   }
   M.tries++;
-  renderAll();
-  // 게이지 연출
-  const ov=document.getElementById("enh-overlay"),fill=document.getElementById("enh-fill");
-  document.getElementById("enh-txt").textContent=`+${n} → +${n+1} 강화 중...`;
-  ov.classList.add("on");fill.style.width="0";
-  const raf=typeof requestAnimationFrame==="function"?requestAnimationFrame:(cb=>setTimeout(cb,16));
-  raf(()=>raf(()=>{fill.style.width="100%";}));
-  setTimeout(()=>{
-    ov.classList.remove("on");
-    enhBusy=false;
-    resolveEnhance(n,bonus,shieldUsed);
-    saveRun();saveMeta();
-  },1500);
+  enhBusy=false;
+  resolveEnhance(n,bonus,shieldUsed);
+  saveRun();saveMeta();
 }
 function resolveEnhance(n,bonus,shieldUsed){
   const d=DEST[n];
