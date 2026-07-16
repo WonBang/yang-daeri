@@ -202,7 +202,7 @@ button:disabled:hover{background:var(--panel)}
         <div class="prob-bar" id="prob-bar"></div>
         <div class="items" id="item-slots"></div>
         <button id="btn-enh">⚒️ 강화하기 <span id="enh-cost" class="mono"></span></button>
-        <div class="enh-note">실패 시 +0으로 복귀(자산 유지) · 파괴 시 양대리 소멸(이적료 0원)<br>🛡️는 +19강 도전부터 사용 불가 · 자산이 바닥나면 파산(전체 리셋)</div>
+        <div class="enh-note">실패 시 +0으로 복귀(자산 유지) · 파괴 시 게임 오버(전체 리셋)<br>🛡️는 +19강 도전부터 사용 불가 · 자산이 바닥나면 파산(전체 리셋)</div>
       </div>
     </div>
   </div>
@@ -245,7 +245,7 @@ button:disabled:hover{background:var(--panel)}
     <div class="m-tag mono">인사팀 공지</div>
     <div class="destroy-title">💥 파 괴 💥</div>
     <div class="m-text" id="destroy-text"></div>
-    <button style="width:100%;background:var(--ink);color:#fff" id="btn-rebirth">신입 양대리 영입 (자산은 유지)</button>
+    <button style="width:100%;background:var(--ink);color:#fff" id="btn-rebirth">처음부터 다시 시작</button>
   </div>
 </div>
 <!-- 파산 모달 -->
@@ -268,12 +268,14 @@ const SAVE_KEY="yangup_save3", META_KEY="yangup_meta3";
 
 /* ---------- 강화 테이블 (n → n+1, 0~24) ---------- */
 const MAX_LV=25;
-const SUCC=[100,100,100,100,100, 97,95,93,91,89, 87,85,82,79,76, 68,64,60,56,52, 42,38,34,30,26];
-const DEST=[0,0,0,0,0, 0,0,1,1,1, 2,2,2,3,3, 3,4,4,4,5, 6,7,8,9,10];
+const SUCC=[100,100,100,100,100, 97,95,93,91,89, 87,85,82,79,76, 68,64,60,56,52, 46,42,38,34,30];
+const DEST=[0,0,0,0,0, 0,0,0,0,0, 1,1,2,2,2, 3,3,3,4,4, 4,4,5,5,6];
 const SHIELD_MAX=18; // +18→+19 시도까지만 방지권 사용 가능
 const START_MONEY=50000;
-const enhCost=n=>Math.round(1000*Math.pow(1.40,n));
-const sellPrice=n=>n===0?0:Math.round(700*Math.pow(1.75,n)*saleMult());
+const COST=[1000,1500,2000,3000,4500, 6500,9000,13000,18000,25000, 35000,50000,70000,100000,140000, 200000,280000,400000,550000,750000, 1000000,1400000,1900000,2600000,3500000];
+const SELL=[0,1000,2500,5000,9000,15000, 25000,45000,75000,120000,200000, 330000,550000,900000,1500000,2500000, 4200000,7000000,12000000,20000000,35000000, 60000000,100000000,180000000,320000000,600000000];
+const enhCost=n=>COST[n];
+const sellPrice=n=>n===0?0:Math.round(SELL[n]*saleMult());
 const TIERS=[[0,"인턴"],[3,"사원"],[5,"대리"],[8,"과장"],[11,"차장"],[14,"부장"],[17,"이사"],[20,"사장"],[23,"회장"],[25,"재벌 총수"]];
 
 /* ---------- 아이템 (1회성 소모품) ---------- */
@@ -282,7 +284,7 @@ const ITEMS=[
  {id:"chicken",ico:"🍗",nm:"야근치킨",de:"사기 충전! 성공 확률 소폭 상승",bonus:7,price:5000},
  {id:"iv",ico:"💉",nm:"링거",de:"몸이 되살아난다. 성공 확률 제법 상승",bonus:12,price:30000},
  {id:"praise",ico:"👏",nm:"부장의 칭찬",de:"영혼이 각성한다. 성공 확률 대폭 상승",bonus:20,price:200000},
- {id:"shield",ico:"🛡️",nm:"파괴방지권",de:"파괴 1회 방어 (+19강부터 사용 불가)",bonus:0,price:300000}
+ {id:"shield",ico:"🛡️",nm:"파괴방지권",de:"파괴 1회 방어 (+19강부터 사용 불가)",bonus:0,price:150000}
 ];
 
 /* ---------- 스펙업 (런 내 영구, 파산 시 리셋) ---------- */
@@ -411,18 +413,17 @@ function destroySequence(n){
     document.getElementById("destroy-text").textContent=
 `+${n} 강화 도중 ${M.gen-1}대 양대리가 ${eul[Math.floor(Math.random()*eul.length)]}
 
-이적료 0원. 투자금은 증발했지만 남은 자산과 스펙업은 유지된다.
+자산, 스펙업, 아이템 전부 함께 사라졌다. 게임 오버.
 
-누적 파괴 ${M.destroys}회 · 역대 최고 +${M.bestLv}`;
+누적 파괴 ${M.destroys}회 · 역대 최고 +${M.bestLv} · 누적 이적료 ${fmt(M.totalSale)}`;
     document.getElementById("destroy-back").classList.add("on");
   },750);
 }
 document.getElementById("btn-rebirth").onclick=()=>{
-  R.lv=0;
+  R=newRun();
   document.getElementById("destroy-back").classList.remove("on");
-  toast(`🧑‍💼 ${M.gen}대 양대리 영입. 아무것도 모른 채 웃고 있다.`);
+  toast(`🌅 ${M.gen}대 양대리, 시작 자본 ${fmt(START_MONEY)}으로 새 출발.`);
   saveRun();saveMeta();renderAll();
-  checkBankrupt();
 };
 
 /* ---------- 판매(이직) ---------- */
@@ -494,7 +495,7 @@ const EVENTS=[
  {tag:"야근",t:"긴급 야근 요청. 수당은 두둑하다.",c:[["한다 (+수당)",sc=>{R.money+=sc*2;return"주말과 맞바꾼 수당. 통장은 웃고 몸은 운다.";}],["거절한다",()=>"저녁이 있는 삶을 지켰다."]]},
  {tag:"지출",t:"지하철에서 졸다 지갑을 잃어버렸다!",c:[["유실물센터로 달려간다",sc=>{if(Math.random()<0.5)return"찾았다! 대한민국 시민의식 만세.";R.money=Math.max(0,R.money-sc);return"현금만 사라져 있었다. 시민의식에도 예외는 있다.";}]]},
  {tag:"외주",t:"지인: \"간단한 홈페이지 하나만... 사례할게.\"",c:[["받는다 (+외주비)",sc=>{R.money+=sc*4;return"'간단한'은 거짓말이었지만 돈은 진짜였다.";}],["거절한다",()=>"주말을 지켰다. '간단한 홈페이지'란 존재하지 않는다."]]},
- {tag:"복지",t:"사내 벼룩시장. 총무팀이 '파괴방지권(정품)'을 반값에 판다(?)",c:[["산다 (-15만원)",()=>{if(R.money<150000)return"돈이 모자라다. 반값도 비싸다.";R.money-=150000;R.items.shield++;return"파괴방지권 획득. 출처는 묻지 않기로 했다.";}],["구경만",()=>"눈으로만 쇼핑했다."]]},
+ {tag:"복지",t:"사내 벼룩시장. 총무팀이 '파괴방지권(정품)'을 반값에 판다(?)",c:[["산다 (-7.5만원)",()=>{if(R.money<75000)return"돈이 모자라다. 반값도 비싸다.";R.money-=75000;R.items.shield++;return"파괴방지권 획득. 출처는 묻지 않기로 했다.";}],["구경만",()=>"눈으로만 쇼핑했다."]]},
  {tag:"동물",t:"주차장 길고양이 '널포인터'가 당신을 빤히 본다.",c:[["츄르를 사준다",sc=>{R.money=Math.max(0,R.money-Math.floor(sc/20));R.items.coffee++;return"고양이를 챙기는 당신에게 동료가 커피를 사줬다. 세상은 돌고 돈다.";}],["지나친다",()=>"널포인터는 옆 회사 사람에게 갔다. 참조가 옮겨졌다."]]},
  {tag:"심부름",t:"부장: \"양대리, 임원회의 자료 좀. 급해!\"",c:[["광속 처리",sc=>{if(Math.random()<0.5){R.items.praise++;return"완벽한 심부름. '부장의 칭찬' 획득!";}R.money+=Math.floor(sc/2);return"수고비로 커피값을 쥐여줬다.";}],["프린터 고장 핑계",()=>"부장이 직접 뽑았다. 어색한 침묵이 이틀 갔다."]]},
  {tag:"세금",t:"국세청 알림: 이적료 소득에 대한 세무조사 안내(?!)",c:[["성실 납부 (자산 10%)",()=>{const tax=Math.floor(R.money*0.1);R.money-=tax;return`세금 ${fmt(tax)} 납부. 유리지갑은 오늘도 투명하다.`;}],["세무사 선임 (자산 3%)",()=>{const fee=Math.floor(R.money*0.03);R.money-=fee;if(Math.random()<0.7)return"세무사가 깔끔하게 방어했다. 수수료가 아깝지 않다.";R.money-=Math.floor(R.money*0.08);return"세무사도 못 막았다. 추가 납부 통지서가 도착했다.";}]]}
