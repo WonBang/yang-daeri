@@ -202,7 +202,7 @@ button:disabled:hover{background:var(--panel)}
         <div class="prob-bar" id="prob-bar"></div>
         <div class="items" id="item-slots"></div>
         <button id="btn-enh">⚒️ 강화하기 <span id="enh-cost" class="mono"></span></button>
-        <div class="enh-note">실패 시 티어 시작점(+0/+5/+10/+15/+20)으로 하락 · 파괴 시 양대리 소멸(이적료 0원)<br>🛡️는 +19강 도전부터 사용 불가 · 자산이 바닥나면 파산(전체 리셋)</div>
+        <div class="enh-note">실패 시 +0으로 복귀(자산 유지) · 파괴 시 양대리 소멸(이적료 0원)<br>🛡️는 +19강 도전부터 사용 불가 · 자산이 바닥나면 파산(전체 리셋)</div>
       </div>
     </div>
   </div>
@@ -268,10 +268,8 @@ const SAVE_KEY="yangup_save3", META_KEY="yangup_meta3";
 
 /* ---------- 강화 테이블 (n → n+1, 0~24) ---------- */
 const MAX_LV=25;
-const SUCC=[100,100,100,100,100, 96,92,88,84,80, 72,66,60,54,48, 42,37,32,28,24, 20,17,14,12,10];
-const DEST=[0,0,0,0,0, 0,0,1,1,2, 2,3,3,4,4, 5,5,6,6,7, 8,8,9,9,10];
-const CHECKPOINTS=[0,5,10,15,20];
-const floorOf=n=>{let f=0;for(const c of CHECKPOINTS)if(n>=c)f=c;return f;};
+const SUCC=[100,100,100,100,100, 97,95,93,91,89, 87,85,82,79,76, 68,64,60,56,52, 42,38,34,30,26];
+const DEST=[0,0,0,0,0, 0,0,1,1,1, 2,2,2,3,3, 3,4,4,4,5, 6,7,8,9,10];
 const SHIELD_MAX=18; // +18→+19 시도까지만 방지권 사용 가능
 const START_MONEY=50000;
 const enhCost=n=>Math.round(1000*Math.pow(1.32,n));
@@ -391,15 +389,14 @@ function resolveEnhance(n,bonus,shieldUsed){
       M.destroys++;M.gen++;
       destroySequence(n);
     }
-  }else{ // 실패: 체크포인트로 하락
-    const f=floorOf(n);
-    if(f<n){
-      R.lv=f;
+  }else{ // 실패: 0강 복귀
+    if(n>0){
+      R.lv=0;
       stage.classList.remove("enh-drop");void stage.offsetWidth;
       stage.classList.add("enh-drop");
-      toast(`📉 강화 실패... +${f}(${tierName(f)})으로 하락. 자산은 무사하다.`);
+      toast(`📉 강화 실패... +${n} 양대리가 +0으로 돌아갔다. 자산은 무사하다.`);
     }else{
-      toast("강화 실패. 체크포인트 위라 잃을 것도 없다.");
+      toast("강화 실패. 이미 바닥이라 잃을 단계도 없다.");
     }
   }
   checkAch();
@@ -576,7 +573,7 @@ function renderEnh(){
   $("enh-next").textContent=`+${n} → +${n+1} (${tierName(n+1)})`;
   $("enh-succ").textContent=p.s+"%";
   $("enh-succ").className=p.s>=60?"ok":p.s>=25?"warn":"bad";
-  $("enh-risk").innerHTML=`실패(+${floorOf(n)} 하락) ${p.f}% / <span style="color:var(--danger)">파괴 ${p.d}%</span>`;
+  $("enh-risk").innerHTML=`실패(+0 복귀) ${p.f}% / <span style="color:var(--danger)">파괴 ${p.d}%</span>`;
   $("prob-bar").innerHTML=
    `<span class="p-s" style="width:${p.s}%"></span><span class="p-f" style="width:${p.f}%"></span><span class="p-d" style="width:${p.d}%"></span>`;
   $("btn-enh").disabled=R.money<enhCost(n);
