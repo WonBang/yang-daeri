@@ -274,7 +274,7 @@ const CHECKPOINTS=[0,5,10,15,20];
 const floorOf=n=>{let f=0;for(const c of CHECKPOINTS)if(n>=c)f=c;return f;};
 const SHIELD_MAX=18; // +18→+19 시도까지만 방지권 사용 가능
 const START_MONEY=50000;
-const enhCost=n=>Math.round(300*Math.pow(1.38,n));
+const enhCost=n=>Math.round(1000*Math.pow(1.32,n));
 const sellPrice=n=>n===0?0:Math.round(500*Math.pow(1.9,n)*saleMult());
 const TIERS=[[0,"인턴"],[3,"사원"],[5,"대리"],[8,"과장"],[11,"차장"],[14,"부장"],[17,"이사"],[20,"사장"],[23,"회장"],[25,"재벌 총수"]];
 
